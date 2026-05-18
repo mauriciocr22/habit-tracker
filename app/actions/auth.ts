@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
+import { signIn } from "@/auth";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 const schema = z.object({
     name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres"),
@@ -36,4 +38,19 @@ export async function registerUser(prevState: unknown, data: FormData) {
     });
 
     redirect("/login");
+}
+
+export async function loginUser(prevState: unknown, data: FormData) {
+    const email = data.get("email") as string;
+    const password = data.get("password") as string;
+    try {
+        await signIn("credentials", {
+            email,
+            password,
+            redirectTo: "/dashboard"
+        });
+    } catch (error) {
+        if (isRedirectError(error)) throw error;
+        return { errors: { email: ["Credenciais inválidas"] } };
+    }
 }
