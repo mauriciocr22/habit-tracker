@@ -1,3 +1,4 @@
+'use client'
 import { toggleHabitLog } from "@/app/actions/logs";
 import { startTransition, useOptimistic } from "react";
 
