@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 const schema = z.object({
@@ -53,4 +53,8 @@ export async function loginUser(prevState: unknown, data: FormData) {
         if (isRedirectError(error)) throw error;
         return { errors: { email: ["Credenciais inválidas"] } };
     }
+}
+
+export async function logoutUser() {
+    await signOut({ redirectTo: "/" });
 }
