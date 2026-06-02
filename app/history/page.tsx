@@ -26,7 +26,14 @@ export default async function HistoryPage() {
     })
 
     return (
-        <div>
+        <div className="max-w-4xl mx-auto px-6 py-12 animate-fade-in-up">
+            <div className="mb-8">
+                <h1 className="text-3xl font-semibold tracking-tight text-stone-900 mb-2">
+                    Your Progress
+                </h1>
+                <p className="text-stone-500">Last 7 days of habit tracking</p>
+            </div>
+
             <HabitHistoryGrid habits={habits} logs={logs} />
         </div>
     )
